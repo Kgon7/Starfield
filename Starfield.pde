@@ -10,9 +10,6 @@ void setup()
 void draw()
 {
   background(0);
-  noFill();
-  stroke(255, 0, 0);
-    ellipse(300,300,510,510);
   noStroke();
   for (int i = 0; i < Bob.length; i++)
     Bob[i].move();
@@ -28,32 +25,40 @@ void mousePressed()
     Bob[i].myX = Bob[i].myY = 300;
     Bob[i].mySpeed = Math.random()* 2;
     Bob[i].myAngle = Math.random()*2*Math.PI;
-    Bob[i].myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
+    Bob[i].myColor = (255);
   }
 }
 class Particle
 {
-  double myX, myY, mySpeed, myAngle;
+  double myX, myY, mySpeed, myAngle, pp;
   int myColor;
   Particle()
   {
-    myX = myY = 300;
+    myX = Math.random()*20+275;
+    myY = Math.random()*20+275;
     mySpeed = Math.random()* 2;
     myAngle = Math.random()*2*Math.PI;
-    myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
+    myColor = color(255,255,0);
+    pp = dist((float)myX,(float)myY,300,300);
   }
   void show()
   {
-    fill(myColor);
-    ellipse((int)myX, (int)myY, 10, 10);
+    fill(255,255,0);
+    ellipse((int)myX, (int)myY, (int)pp/10, (int)pp/10);
   }
   void move()
   {
     myX = myX + Math.cos(myAngle)*mySpeed;
     myY = myY + Math.sin(myAngle)*mySpeed;
-    float pp = dist((float)myX, (float)myY, (float)300,(float)300);
-    if(pp >= 249)
+    if (myX <= 0) 
       myX = myY = 300;
+    else if (myX >= 600)
+      myX = myY = 300;
+    else if (myY <= 0)
+      myX = myY = 300;
+    else if (myY >= 600)
+      myX = myY = 300;  
+      
   }
 }
 
@@ -61,20 +66,22 @@ class OddballParticle extends Particle
 {
   OddballParticle()
   {   
-    myX = 0;
-    myY = 300;
+    myX = 50;
+    myY = (int)(Math.random()*200)+200;
     mySpeed = 15;
     myAngle = 90;
-    myColor = color(255, 255, 0);
+    myColor = color(255, 0, 0);
   }
   void show()
   {
     fill(myColor);
     rect((int)myX, (int)myY, 20, 20);
-  }
+}
   void move()
   {
     myX = myX + 5;
+    if (myX > 540)
+      myX = 50;
+      myY = (int)(Math.random()*200)+200;
   }
 }
-
